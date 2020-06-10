@@ -9,9 +9,10 @@ import { ogpImage, rootUrl } from "../config";
 const imagePath = "/karate.png";
 const IndexPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [shareUrl, setShareUrl] = useState<string>("");
   const [text, setText] = useState<string>("🍣");
   const [imageBase64, setImageBase64] = useState<string>("");
-  const _share = async () => {
+  const _finish = async () => {
     if (isLoading) {
       return;
     }
@@ -23,10 +24,11 @@ const IndexPage = () => {
         url: shareUrl,
         text: "This is my nabeneko! #NabemekoMaker ",
       };
-      window.open("https://twitter.com/share?" + qs.stringify(twContent));
+      setShareUrl("https://twitter.com/share?" + qs.stringify(twContent));
     } catch {}
     setIsLoading(false);
   };
+  const _share = () => window.open(shareUrl);
   useEffect(() => {
     const createImageFromText = async () => {
       setImageBase64(await createImage(imagePath, text));
@@ -43,15 +45,21 @@ const IndexPage = () => {
 
       <div className={styles.wrapper}>
         <h1 className={styles.title}>🍲Nabeneko😺 Maker</h1>
-        <input
-          className={styles.input}
-          onChange={e => setText(e.target.value)}
-          value={text}
-          type="text"
-        />
+        {!shareUrl && (
+          <input
+            className={styles.input}
+            onChange={e => setText(e.target.value)}
+            value={text}
+            type="text"
+          />
+        )}
         <img className={styles.img} src={imageBase64 || imagePath}></img>
-        <button className={styles.share} onClick={_share}>
-          {isLoading ? "posting image..." : "Share on Twitter"}
+        <button className={styles.share} onClick={shareUrl ? _share : _finish}>
+          {shareUrl
+            ? "Share on Twitter"
+            : isLoading
+            ? "posting image..."
+            : "Create Image"}
         </button>
       </div>
     </>
