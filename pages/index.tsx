@@ -1,8 +1,10 @@
+import Head from "next/head";
 import qs from "querystring";
 import styles from "./index.module.css";
 import { useEffect, useState } from "react";
 import { createImage } from "../libs/imageFuctory";
 import { postImage } from "../libs/imgur";
+import { ogpImage, rootUrl } from "../config";
 
 const imagePath = "/karate.png";
 const IndexPage = () => {
@@ -32,19 +34,27 @@ const IndexPage = () => {
     createImageFromText();
   }, [text]);
   return (
-    <div className={styles.wrapper}>
-      <h1 className={styles.title}>🍲Nabeneko😺 Maker</h1>
-      <input
-        className={styles.input}
-        onChange={e => setText(e.target.value)}
-        value={text}
-        type="text"
-      />
-      <img className={styles.img} src={imageBase64 || imagePath}></img>
-      <button className={styles.share} onClick={_share}>
-        {isLoading ? "posting image..." : "Share on Twitter"}
-      </button>
-    </div>
+    <>
+      <Head>
+        <meta property="og:url" content={rootUrl}></meta>
+        <meta property="og:image" content={ogpImage}></meta>
+        <meta property="twitter:image" content={ogpImage}></meta>
+      </Head>
+
+      <div className={styles.wrapper}>
+        <h1 className={styles.title}>🍲Nabeneko😺 Maker</h1>
+        <input
+          className={styles.input}
+          onChange={e => setText(e.target.value)}
+          value={text}
+          type="text"
+        />
+        <img className={styles.img} src={imageBase64 || imagePath}></img>
+        <button className={styles.share} onClick={_share}>
+          {isLoading ? "posting image..." : "Share on Twitter"}
+        </button>
+      </div>
+    </>
   );
 };
 
