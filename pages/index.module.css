@@ -22,3 +22,19 @@
   margin: 24px auto;
   max-width: 100%;
 }
+
+.share {
+  background-color: #56ccf2;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 24px;
+  margin: 24px auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.share:hover {
+  opacity: 0.75;
+  cursor: pointer;
+}
