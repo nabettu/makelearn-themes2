@@ -22,7 +22,7 @@ const IndexPage = () => {
       const shareUrl = location.origin + "/share/" + postId;
       const twContent = {
         url: shareUrl,
-        text: "This is my nabeneko! #NabemekoMaker ",
+        text: "This is my nabeneko! #NabenekoMaker ",
       };
       setShareUrl("https://twitter.com/share?" + qs.stringify(twContent));
     } catch {}
