@@ -61,6 +61,16 @@ const IndexPage = () => {
             ? "posting image..."
             : "Create Image"}
         </button>
+        {Boolean(shareUrl) && (
+          <div className={styles.shareUrlArea}>
+            <p className={styles.text}>Share URL</p>
+            <input
+              className={styles.input}
+              type="text"
+              value={shareUrl}
+            ></input>
+          </div>
+        )}
       </div>
     </>
   );
