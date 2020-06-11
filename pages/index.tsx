@@ -12,6 +12,7 @@ const IndexPage = () => {
   const [shareUrl, setShareUrl] = useState<string>("");
   const [text, setText] = useState<string>("🍣");
   const [imageBase64, setImageBase64] = useState<string>("");
+
   const _finish = async () => {
     if (isLoading) {
       return;
@@ -20,15 +21,18 @@ const IndexPage = () => {
     try {
       const postId = await postImage(imageBase64);
       const shareUrl = location.origin + "/share/" + postId;
-      const twContent = {
-        url: shareUrl,
-        text: "This is my nabeneko! #NabenekoMaker ",
-      };
-      setShareUrl("https://twitter.com/share?" + qs.stringify(twContent));
+      setShareUrl(shareUrl);
     } catch {}
     setIsLoading(false);
   };
-  const _share = () => window.open(shareUrl);
+  const _share = () =>
+    window.open(
+      "https://twitter.com/share?" +
+        qs.stringify({
+          url: shareUrl,
+          text: "This is my nabeneko! #NabenekoMaker ",
+        })
+    );
   useEffect(() => {
     const createImageFromText = async () => {
       setImageBase64(await createImage(imagePath, text));
